@@ -1,4 +1,4 @@
-numpy == 1.17
+numpy == 1.21.4
 opencv-python >= 4.1
 torch == 1.6
 torchvision
@@ -7,3 +7,5 @@ pycocotools
 tqdm
 pillow
 tensorboard >= 1.14
+scipy
+wandb
