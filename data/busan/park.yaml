@@ -1,0 +1,12 @@
+# train and val datasets (image directory or *.txt file with image paths)
+train: /opt/ml/busan_detection_data_yolo_1_8/images/train
+val: /opt/ml/busan_detection_data_yolo_1_8/images/val
+test: /opt/ml/busan_detection_data_yolo_1_8/images/test
+
+# number of classes
+nc: 13
+
+# class names
+names: ['garbage_bag', 'banner', 'tent', 'pet', 'fence', 
+        'bench', 'park_pot', 'trash_can', 'rest_area', 'toilet', 'park_headstone', 
+        'street_lamp', 'park_info']
