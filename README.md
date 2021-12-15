@@ -1,5 +1,51 @@
 # YOLOv4
 
+실험번호는 임시 번호 입니다.
+나중에 다시 정리 될 수 있습니다.
+
+## Augmentation
+
+|실험번호|fliplr|translate|hsv|rotate|scale|perspective|mosaic|mixup|비고|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|1|✔|✔| | | | | | |
+|2|✔|✔|✔| | | | | |
+|3|✔|✔| |✔| | | | | 
+|4|✔|✔| | |✔| | | | 
+|5|✔|✔| | | |✔| | | 
+|6|✔|✔| | | | |✔| |
+|7|✔|✔| | | | | |✔ |
+
+- 실험 1 - flip lr, translate
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_100e
+```
+- 실험 2 - flip lr, translate, hsv
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_hsv_100e
+```
+- 실험 3 - flip lr, translate, rotate
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_rotate_100e
+```
+- 실험 4 - flip lr, translate, scale
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_scale.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_scale_100e
+```
+- 실험 5 - flip lr, translate, perspective
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_per.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_per_100e
+```
+- 실험 6 - flip lr, translate, mosaic
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mos.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_mos_100e
+```
+- 실험 7 - flip lr, translate, mixup
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mix.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_mix_100e
+```
+
+
+
 This is PyTorch implementation of [YOLOv4](https://github.com/AlexeyAB/darknet) which is based on [ultralytics/yolov3](https://github.com/ultralytics/yolov3).
 
 * [[original Darknet implementation of YOLOv4]](https://github.com/AlexeyAB/darknet)

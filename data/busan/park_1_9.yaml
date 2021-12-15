@@ -1,7 +1,7 @@
 # train and val datasets (image directory or *.txt file with image paths)
-train: /opt/ml/busan_detection_data_yolo_1_8/images/train
-val: /opt/ml/busan_detection_data_yolo_1_8/images/val
-test: /opt/ml/busan_detection_data_yolo_1_8/images/test
+train: /opt/ml/busan_detection_data_yolo_1_9/images/train
+val: /opt/ml/busan_detection_data_yolo_1_9/images/val
+test: /opt/ml/busan_detection_data_yolo_1_9/images/test
 
 # number of classes
 nc: 13
