@@ -17,31 +17,31 @@
 
 - 실험 1 - flip lr, translate
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_100e
 ```
 - 실험 2 - flip lr, translate, hsv
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_hsv_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_hsv_100e
 ```
 - 실험 3 - flip lr, translate, rotate
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_rotate_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_rotate_100e
 ```
 - 실험 4 - flip lr, translate, scale
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_scale.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_scale_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_scale.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_scale_100e
 ```
 - 실험 5 - flip lr, translate, perspective
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_per.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_per_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_per.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_per_100e
 ```
 - 실험 6 - flip lr, translate, mosaic
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mos.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_mos_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mos.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mos_100e
 ```
 - 실험 7 - flip lr, translate, mixup
 ```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mix.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights yolov4-csp-x-leaky.weights --project busan --name x-leaky_bs16_640_640_flip1r_t_mix_100e
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mix.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mix_100e
 ```
 
 
