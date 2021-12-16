@@ -5,43 +5,60 @@
 
 ## Augmentation
 
-|실험번호|fliplr|translate|mosaic|hsv|rotate|scale|perspective|mixup|비고|
+|실험 번호|fliplr|translate|mosaic|hsv|rotate|scale|perspective|mixup|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|1|✔|✔|✔| | | | | | |
-|2|✔|✔|✔|✔| | | | | |
-|3|✔|✔|✔| |✔| | | | |
-|4|✔|✔|✔| | |✔| | | |
-|5|✔|✔|✔| | | |✔| | |
-|6|✔|✔|✔| | | | |✔| |
-|7|✔|✔|✔|✔| |✔| | |yolo default |
+|A1|✔|✔|✔| | | | | | |
+|A2|✔|✔|✔|✔| | | | | |
+|A3|✔|✔|✔| |✔| | | | |
+|A4|✔|✔|✔| | |✔| | | |
+|A5|✔|✔|✔| | | |✔| | |
+|A6|✔|✔|✔| | | | |✔| |
+|A7|✔|✔|✔|✔| |✔| | |yolo default |
 
-- 실험 1 - flip lr, translate, mosaic
+- 실험 A1 - flip lr, translate, mosaic
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_100e
 ```
-- 실험 2 - flip lr, translate, mosaic, hsv
+- 실험 A2 - flip lr, translate, mosaic, hsv
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
 ```
-- 실험 3 - flip lr, translate, mosaic, rotate
+- 실험 A3 - flip lr, translate, mosaic, rotate
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e
 ```
-- 실험 4 - flip lr, translate, mosaic, scale
+- 실험 A4 - flip lr, translate, mosaic, scale
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_scale.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e
 ```
-- 실험 5 - flip lr, translate, mosaic, perspective
+- 실험 A5 - flip lr, translate, mosaic, perspective
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_per.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e
 ```
-- 실험 6 - flip lr, translate, mosaic, mixup
+- 실험 A6 - flip lr, translate, mosaic, mixup
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_mixup.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e
 ```
-- 실험 7 - flip lr, translate, mosaic, hsv, scale
+- 실험 A7 - flip lr, translate, mosaic, hsv, scale
 ```shell
 python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e
+```
+
+## Focal Loss
+Object loss, classification loss에 focal loss를 적용
+
+|실험 번호|실험 내용|비고|
+|:---:|:---:|:---:|
+|F1|CE loss|yolo default|
+|F2|Focal loss| |
+
+- 실험 F1 - CE loss
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c
+```
+- 실험 F2 - focal loss
+```shell
+python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default_focal.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c
 ```
 
 
