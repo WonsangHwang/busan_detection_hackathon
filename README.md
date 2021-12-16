@@ -14,6 +14,8 @@
 |A5|✔|✔|✔| | | |✔| |0.6427|0.8207| | | |
 |A6|✔|✔|✔| | | | |✔|0.6638|0.8164| | | |
 |A7|✔|✔|✔|✔| |✔| | |0.6734|0.8259| | |yolo default|
+|A8|✔|✔|✔|✔| |✔|✔|✔| | | | | |
+|A9|✔|✔|✔|✔|✔|✔|✔|✔| | | | | |
 
 - 실험 A1 - flip lr, translate, mosaic
   - Train
@@ -77,6 +79,24 @@
   - Test
     ```shell
     python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e_best_ap
+    ```
+- 실험 A8 - flip lr, translate, mosaic, hsv, scale, perspective, mixup
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_all_aug_except_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_all_aug_except_rotate_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_except_rotate_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_except_rotate_100e_best_ap
+    ```
+- 실험 A9 - flip lr, translate, mosaic, hsv, rotate, scale, perspective, mixup
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_all_aug.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_all_aug_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_100e_best_ap
     ```
 
 ## Focal Loss
