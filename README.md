@@ -5,52 +5,87 @@
 
 ## Augmentation
 
-|실험 번호|fliplr|translate|mosaic|hsv|rotate|scale|perspective|mixup|비고|
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|A1|✔|✔|✔| | | | | | |
-|A2|✔|✔|✔|✔| | | | | |
-|A3|✔|✔|✔| |✔| | | | |
-|A4|✔|✔|✔| | |✔| | | |
-|A5|✔|✔|✔| | | |✔| | |
-|A6|✔|✔|✔| | | | |✔| |
-|A7|✔|✔|✔|✔| |✔| | |yolo default |
+|실험 번호|fliplr|translate|mosaic|hsv|rotate|scale|perspective|mixup|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|A1|✔|✔|✔| | | | | |0.6431|0.7922| | |baseline|
+|A2|✔|✔|✔|✔| | | | |0.6448|0.7940| | | |
+|A3|✔|✔|✔| |✔| | | | | | | | |
+|A4|✔|✔|✔| | |✔| | |0.6678|0.8211| | | |
+|A5|✔|✔|✔| | | |✔| |0.6427|0.8207| | | |
+|A6|✔|✔|✔| | | | |✔|0.6638|0.8164| | | |
+|A7|✔|✔|✔|✔| |✔| | |0.6734|0.8259| | |yolo default|
 
 - 실험 A1 - flip lr, translate, mosaic
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_100e_best_ap
+    ```
 - 실험 A2 - flip lr, translate, mosaic, hsv
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e_best_ap
+    ```
 - 실험 A3 - flip lr, translate, mosaic, rotate
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_rotate.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e
+    ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e_best_ap
+    ```
 - 실험 A4 - flip lr, translate, mosaic, scale
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_scale.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_scale.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e_best_ap
+    ```
 - 실험 A5 - flip lr, translate, mosaic, perspective
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_per.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_per.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e_best_ap
+    ```
 - 실험 A6 - flip lr, translate, mosaic, mixup
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_mixup.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_mixup.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e_best_ap
+    ```
 - 실험 A7 - flip lr, translate, mosaic, hsv, scale
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e
-```
+  - Train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e
+    ```
+  - Test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e_best_ap
+    ```
 
 ## Focal Loss
 Object loss, classification loss에 focal loss를 적용
 
-|실험 번호|실험 내용|비고|
-|:---:|:---:|:---:|
-|F1|CE loss|yolo default|
-|F2|Focal loss| |
+|실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|F1|CE loss| | | | |yolo default|
+|F2|Focal loss| | | | |gamma=1.5|
 
 - 실험 F1 - CE loss
 ```shell
