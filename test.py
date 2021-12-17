@@ -93,6 +93,12 @@ def test(data,
     except ImportError:
         log_imgs = 0
 
+    if wandb and wandb.run is None:
+        wandb_run = wandb.init(config=vars(opt), resume="allow",
+                               project='YOLOv4' if opt.project == 'runs/train' else Path(opt.project).stem,
+                               name=save_dir.stem,
+                               id=wandb.util.generate_id())
+
     # Dataloader
     if not training:
         img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
@@ -329,7 +335,7 @@ if __name__ == '__main__':
              opt.verbose,
              save_txt=opt.save_txt,
              save_conf=opt.save_conf,
-             plots = opt.plots
+             plots=opt.plots
              )
 
     elif opt.task == 'study':  # run over a range of settings and save/plot
