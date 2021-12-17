@@ -104,19 +104,19 @@ Object loss, classification loss에 focal loss를 적용
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|F1|CE loss| | | | |yolo default|
-|F2|Focal loss| | | | |gamma=1.5|
+|F1|CE loss|0.6926|0.8564| | |yolo default|
+|F2|Focal loss|0.6386|0.7965| | |gamma=1.5|
 
 - 실험 F1 - CE loss
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c
     ```
-- 실험 F2 - focal loss
-  - train
-  ```shell
-  python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default_focal.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c
-  ```
+  - 실험 F2 - focal loss
+    - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default_focal.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c
+    ```
 
 ## K-Fold
 k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대해서만 train 하여 ensemble 하고자 한다.<br/>
@@ -126,7 +126,7 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|K1|1번 train/val set| | | | |F1 실험과 동일|
+|K1|1번 train/val set|0.6926|0.8564| | |F1 실험과 동일|
 |K2|2번 train/val set| | | | | | 
 |K3|3번 train/val set| | | | | | 
 |K4|4번 train/val set| | | | | |
