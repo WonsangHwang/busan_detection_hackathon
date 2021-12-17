@@ -108,15 +108,59 @@ Object loss, classification loss에 focal loss를 적용
 |F2|Focal loss| | | | |gamma=1.5|
 
 - 실험 F1 - CE loss
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c
-```
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c
+    ```
 - 실험 F2 - focal loss
-```shell
-python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default_focal.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c
-```
+  - train
+  ```shell
+  python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default_focal.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c
+  ```
 
+## K-Fold
+k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대해서만 train 하여 ensemble 하고자 한다.<br/>
+아래 실험에서, data set 변경 외에는 다음 조건이 공통적으로 적용되었다. 
+- Augmentation ~ flip lr, translate, mosaic, hsv, scale (yolo default) 적용
+- CE Loss 적용
 
+|실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|K1|1번 train/val set| | | | |F1 실험과 동일|
+|K2|2번 train/val set| | | | | | 
+|K3|3번 train/val set| | | | | | 
+|K4|4번 train/val set| | | | | |
+|K5|5번 train/val set| | | | | |
+
+- 실험 F1 - 1번 train/val set
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k1_100e
+    ```
+
+- 실험 F2 - 2번 train/val set
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_2_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k2_100e
+    ```
+
+- 실험 F3 - 3번 train/val set
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_3_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k3_100e
+    ```
+
+- 실험 F4 - 4번 train/val set
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_4_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k4_100e
+    ```
+
+- 실험 F5 - 5번 train/val set
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_5_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k5_100e
+    ```
 
 This is PyTorch implementation of [YOLOv4](https://github.com/AlexeyAB/darknet) which is based on [ultralytics/yolov3](https://github.com/ultralytics/yolov3).
 
