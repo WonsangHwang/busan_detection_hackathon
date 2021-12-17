@@ -46,6 +46,7 @@ def test(data,
          save_output=False,
          wandb_on=False,
          plots=True,
+         load_output_pickle='',
          log_imgs=0):  # number of logged images
 
     # Initialize/load model and set device
@@ -122,7 +123,14 @@ def test(data,
     p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     loss = torch.zeros(3, device=device)
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
-    all_outputs = []
+
+    all_outputs_to_save = []
+    all_outputs_loaded = []
+    batch_output_start_index = 0
+    if load_output_pickle:
+        with open(load_output_pickle, 'rb') as pkl_file:
+            all_outputs_loaded = pickle.load(pkl_file)
+
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
         img = img.half() if half else img.float()  # uint8 to fp16/32
@@ -131,24 +139,29 @@ def test(data,
         nb, _, height, width = img.shape  # batch size, channels, height, width
         whwh = torch.Tensor([width, height, width, height]).to(device)
 
-        # Disable gradients
-        with torch.no_grad():
-            # Run model
-            t = time_synchronized()
-            inf_out, train_out = model(img, augment=augment)  # inference and training outputs
-            t0 += time_synchronized() - t
+        if load_output_pickle:
+            batch_output_end_index = batch_output_start_index + img.size()[0]
+            output = all_outputs_loaded[batch_output_start_index:batch_output_end_index]
+            batch_output_start_index = batch_output_end_index
+        else:
+            # Disable gradients
+            with torch.no_grad():
+                # Run model
+                t = time_synchronized()
+                inf_out, train_out = model(img, augment=augment)  # inference and training outputs
+                t0 += time_synchronized() - t
 
-            # Compute loss
-            if training:  # if model has loss hyperparameters
-                loss += compute_loss([x.float() for x in train_out], targets, model)[1][:3]  # box, obj, cls
+                # Compute loss
+                if training:  # if model has loss hyperparameters
+                    loss += compute_loss([x.float() for x in train_out], targets, model)[1][:3]  # box, obj, cls
 
-            # Run NMS
-            t = time_synchronized()
-            output = non_max_suppression(inf_out, conf_thres=conf_thres, iou_thres=iou_thres)
-            t1 += time_synchronized() - t
+                # Run NMS
+                t = time_synchronized()
+                output = non_max_suppression(inf_out, conf_thres=conf_thres, iou_thres=iou_thres)
+                t1 += time_synchronized() - t
 
-            if save_output:
-                all_outputs.extend(output)
+                if save_output:
+                    all_outputs_to_save.extend(output)
 
         # Statistics per image
         for si, pred in enumerate(output):
@@ -298,7 +311,7 @@ def test(data,
     # Save Output
     if save_output:
         with open(save_dir / f'{opt.name}_output.pkl', 'wb') as pkl_file:
-            pickle.dump(all_outputs, pkl_file)
+            pickle.dump(all_outputs_to_save, pkl_file)
 
     # Return results
     if not training:
@@ -329,6 +342,7 @@ if __name__ == '__main__':
     parser.add_argument('--save-output', action='store_true', help='save a output pkl file for ensemble')
     parser.add_argument('--plots', action='store_true', help='save plots')
     parser.add_argument('--wandb', action='store_true', help='Wandb logging on')
+    parser.add_argument('--load-output-pickle', type=str, default='', help='output pickle path to load')
     parser.add_argument('--project', default='runs/test', help='save to project/name')
     parser.add_argument('--name', default='exp', help='save to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
@@ -353,7 +367,8 @@ if __name__ == '__main__':
              save_txt=opt.save_txt,
              save_conf=opt.save_conf,
              save_output=opt.save_output,
-             plots=opt.plots
+             plots=opt.plots,
+             load_output_pickle=opt.load_output_pickle
              )
 
     elif opt.task == 'study':  # run over a range of settings and save/plot
