@@ -1,12 +1,20 @@
 # YOLOv4
 
-## Augmentation
+## 실험
+- 모든 실험은 공통적으로 아래 조건에서 수행되었다.
+  - csp-x-leaky 모델 사용
+  - image size: 640 (train, val, test)
+  - train epochs: 100
+  - batch size: 16
+- 그 외, 아래 실험에서 명시하지 않은 사항은 yolov4 기본 세팅을 따랐다.
+
+### Augmentation
 
 |실험 번호|fliplr|trans-late|mosaic|hsv|rotate|scale|persp-ective|mixup|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |A1|✔|✔|✔| | | | | |0.643|0.792|0.652|0.802|baseline|
 |A2|✔|✔|✔|✔| | | | |0.645|0.794|0.648|0.801| |
-|A3|✔|✔|✔| |✔| | | | | | | | |
+|A3|✔|✔|✔| |✔| | | |0.630|0.811|0.635|0.816|서버 문제로 94 epoch까지만 학습|
 |A4|✔|✔|✔| | |✔| | |0.668|0.821|0.675|0.829| |
 |A5|✔|✔|✔| | | |✔| |0.643|0.821|0.660|0.830| |
 |A6|✔|✔|✔| | | | |✔|0.664|0.816|0.669|0.822| |
@@ -96,7 +104,7 @@
     python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_100e_best_ap
     ```
 
-## Focal Loss
+### Focal Loss
 Object loss, classification loss에 focal loss를 적용
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
@@ -123,7 +131,7 @@ Object loss, classification loss에 focal loss를 적용
     python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_focal_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c_best_ap
     ```
 
-## K-Fold
+### K-Fold
 k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대해서만 train 하여 ensemble 하고자 한다.<br/>
 아래 실험에서, data set 변경 외에는 다음 조건이 공통적으로 적용되었다. 
 - Augmentation ~ flip lr, translate, mosaic, hsv, scale (yolo default) 적용
