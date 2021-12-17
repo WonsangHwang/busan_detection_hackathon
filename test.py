@@ -3,6 +3,7 @@ import glob
 import json
 import os
 from pathlib import Path
+import pickle
 
 import numpy as np
 import torch
@@ -42,6 +43,8 @@ def test(data,
          save_dir=Path(''),  # for saving images
          save_txt=False,  # for auto-labelling
          save_conf=False,
+         save_output=False,
+         wandb_on=False,
          plots=True,
          log_imgs=0):  # number of logged images
 
@@ -88,9 +91,12 @@ def test(data,
 
     # Logging
     log_imgs, wandb = min(log_imgs, 100), None  # ceil
-    try:
-        import wandb  # Weights & Biases
-    except ImportError:
+    if wandb_on:
+        try:
+            import wandb  # Weights & Biases
+        except ImportError:
+            log_imgs = 0
+    else:
         log_imgs = 0
 
     if wandb and wandb.run is None:
@@ -116,6 +122,7 @@ def test(data,
     p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     loss = torch.zeros(3, device=device)
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
+    all_outputs = []
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
         img = img.half() if half else img.float()  # uint8 to fp16/32
@@ -139,6 +146,9 @@ def test(data,
             t = time_synchronized()
             output = non_max_suppression(inf_out, conf_thres=conf_thres, iou_thres=iou_thres)
             t1 += time_synchronized() - t
+
+            if save_output:
+                all_outputs.extend(output)
 
         # Statistics per image
         for si, pred in enumerate(output):
@@ -165,7 +175,7 @@ def test(data,
                         f.write(('%g ' * len(line)).rstrip() % line + '\n')
 
             # W&B logging
-            if plots and len(wandb_images) < log_imgs:
+            if plots and wandb and len(wandb_images) < log_imgs:
                 box_data = [{"position": {"minX": xyxy[0], "minY": xyxy[1], "maxX": xyxy[2], "maxY": xyxy[3]},
                              "class_id": int(cls),
                              "box_caption": "%s %.3f" % (names[cls], conf),
@@ -285,6 +295,11 @@ def test(data,
         except Exception as e:
             print('ERROR: pycocotools unable to run: %s' % e)
 
+    # Save Output
+    if save_output:
+        with open(save_dir / f'{opt.name}_output.pkl', 'wb') as pkl_file:
+            pickle.dump(all_outputs, pkl_file)
+
     # Return results
     if not training:
         print('Results saved to %s' % save_dir)
@@ -311,7 +326,9 @@ if __name__ == '__main__':
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')
+    parser.add_argument('--save-output', action='store_true', help='save a output pkl file for ensemble')
     parser.add_argument('--plots', action='store_true', help='save plots')
+    parser.add_argument('--wandb', action='store_true', help='Wandb logging on')
     parser.add_argument('--project', default='runs/test', help='save to project/name')
     parser.add_argument('--name', default='exp', help='save to project/name')
     parser.add_argument('--exist-ok', action='store_true', help='existing project/name ok, do not increment')
@@ -335,6 +352,7 @@ if __name__ == '__main__':
              opt.verbose,
              save_txt=opt.save_txt,
              save_conf=opt.save_conf,
+             save_output=opt.save_output,
              plots=opt.plots
              )
 
