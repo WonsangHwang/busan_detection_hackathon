@@ -2,10 +2,10 @@
 
 ## Augmentation
 
-|실험 번호|fliplr|translate|mosaic|hsv|rotate|scale|perspective|mixup|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
+|실험 번호|fliplr|trans-late|mosaic|hsv|rotate|scale|persp-ective|mixup|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |A1|✔|✔|✔| | | | | |0.643|0.792|0.652|0.802|baseline|
-|A2|✔|✔|✔|✔| | | | |0.645|0.794| | | |
+|A2|✔|✔|✔|✔| | | | |0.645|0.794|0.648|0.801| |
 |A3|✔|✔|✔| |✔| | | | | | | | |
 |A4|✔|✔|✔| | |✔| | |0.668|0.821|0.675|0.829| |
 |A5|✔|✔|✔| | | |✔| |0.643|0.821|0.660|0.830| |
@@ -102,7 +102,7 @@ Object loss, classification loss에 focal loss를 적용
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |**F1**|**CE loss**|**0.693**|**0.856**|**0.863**|**0.698**|yolo default|
-|F2|Focal loss|0.639|0.797| | |gamma=1.5|
+|F2|Focal loss|0.639|0.797|0.644|0.803|gamma=1.5|
 
 - 실험 F1 - CE loss
   - train
