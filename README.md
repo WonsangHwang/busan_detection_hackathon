@@ -29,12 +29,12 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_100e_best_ap
     ```
 - 실험 A2 - flip lr, translate, mosaic, hsv
   - Train
     ```shell
-    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
+    python train.py --device 0 --task test --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
     ```
   - Test
     ```shell
@@ -47,7 +47,7 @@
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_rotate_100e_best_ap
     ```
 - 실험 A4 - flip lr, translate, mosaic, scale
   - Train
@@ -56,7 +56,7 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_scale_100e_best_ap
     ```
 - 실험 A5 - flip lr, translate, mosaic, perspective
   - Train
@@ -65,7 +65,7 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_per_100e_best_ap
     ```
 - 실험 A6 - flip lr, translate, mosaic, mixup
   - Train
@@ -74,7 +74,7 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_mixup_100e_best_ap
     ```
 - 실험 A7 - flip lr, translate, mosaic, hsv, scale
   - Train
@@ -83,7 +83,7 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_scale_yolo_default_100e_best_ap
     ```
 - 실험 A8 - flip lr, translate, mosaic, hsv, scale, perspective, mixup
   - Train
@@ -92,7 +92,7 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_except_rotate_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_except_rotate_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_except_rotate_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_except_rotate_100e_best_ap
     ```
 - 실험 A9 - flip lr, translate, mosaic, hsv, rotate, scale, perspective, mixup
   - Train
@@ -101,7 +101,7 @@
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_100e_best_ap
     ```
 
 ### Focal Loss
@@ -109,7 +109,7 @@ Object loss, classification loss에 focal loss를 적용
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|**F1**|**CE loss**|**0.693**|**0.856**|**0.863**|**0.698**|yolo default|
+|**F1**|**CE loss**|**0.693**|**0.856**|**0.860**|**0.691**|yolo default|
 |F2|Focal loss|0.639|0.797|0.644|0.803|gamma=1.5|
 
 - 실험 F1 - CE loss
@@ -119,7 +119,7 @@ Object loss, classification loss에 focal loss를 적용
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_ce_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_ce_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c_best_ap
     ```
   - 실험 F2 - focal loss
     - train
@@ -128,7 +128,7 @@ Object loss, classification loss에 focal loss를 적용
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_focal_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_focal_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c_best_ap
     ```
 
 ### K-Fold
@@ -139,11 +139,11 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|K1|1번 train/val set|0.693|0.856|0.863|0.698|F1 실험과 동일|
-|K2|2번 train/val set| | | | | | 
-|K3|3번 train/val set| | | | | | 
-|K4|4번 train/val set| | | | | |
-|K5|5번 train/val set| | | | | |
+|K1|1번 train/val set|0.693|0.856|0.860|0.691|F1 실험과 동일|
+|K2|2번 train/val set|0.688|0.856|0.858|0.686| | 
+|K3|3번 train/val set|0.697|0.862|0.859|0.687| | 
+|K4|4번 train/val set|0.690|0.858|0.864|0.694| |
+|K5|5번 train/val set|0.690|0.855|0.865|0.690| |
 
 - 실험 F1 - 1번 train/val set  ➜ F1 실험과 동일
 
@@ -154,7 +154,7 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_2_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k2_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k2_100e
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_2_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k2_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k2_100e
     ```
 
 - 실험 F3 - 3번 train/val set
@@ -164,7 +164,7 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_3_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k3_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k3_100e
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_3_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k3_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k3_100e
     ```
 
 - 실험 F4 - 4번 train/val set
@@ -174,7 +174,7 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_4_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k4_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k4_100e
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_4_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k4_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k4_100e
     ```
 
 - 실험 F5 - 5번 train/val set
@@ -184,7 +184,7 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```
   - test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_5_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k5_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k5_100e
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_5_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k5_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k5_100e
     ```
 
 <br/>
