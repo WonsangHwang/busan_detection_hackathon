@@ -1,21 +1,18 @@
 # YOLOv4
 
-실험번호는 임시 번호 입니다.
-나중에 다시 정리 될 수 있습니다.
-
 ## Augmentation
 
 |실험 번호|fliplr|translate|mosaic|hsv|rotate|scale|perspective|mixup|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|A1|✔|✔|✔| | | | | |0.6431|0.7922| | |baseline|
-|A2|✔|✔|✔|✔| | | | |0.6448|0.7940| | | |
+|A1|✔|✔|✔| | | | | |0.643|0.792|0.652|0.802|baseline|
+|A2|✔|✔|✔|✔| | | | |0.645|0.794| | | |
 |A3|✔|✔|✔| |✔| | | | | | | | |
-|A4|✔|✔|✔| | |✔| | |0.6678|0.8211| | | |
-|A5|✔|✔|✔| | | |✔| |0.6427|0.8207| | | |
-|A6|✔|✔|✔| | | | |✔|0.6638|0.8164| | | |
-|A7|✔|✔|✔|✔| |✔| | |0.6734|0.8259| | |yolo default|
-|A8|✔|✔|✔|✔| |✔|✔|✔|0.6033|0.8100| | | |
-|A9|✔|✔|✔|✔|✔|✔|✔|✔|0.5853|0.8103| | | |
+|A4|✔|✔|✔| | |✔| | |0.668|0.821|0.675|0.829| |
+|A5|✔|✔|✔| | | |✔| |0.643|0.821|0.660|0.830| |
+|A6|✔|✔|✔| | | | |✔|0.664|0.816|0.669|0.822| |
+|**A7**|✔|✔|✔|✔| |✔| | |**0.673**|**0.826**|**0.681**|**0.832**|yolo default|
+|A8|✔|✔|✔|✔| |✔|✔|✔|0.603|0.810|0.624|0.818| |
+|A9|✔|✔|✔|✔|✔|✔|✔|✔|0.585|0.810|0.602|0.820| |
 
 - 실험 A1 - flip lr, translate, mosaic
   - Train
@@ -104,18 +101,26 @@ Object loss, classification loss에 focal loss를 적용
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|F1|CE loss|0.6926|0.8564| | |yolo default|
-|F2|Focal loss|0.6386|0.7965| | |gamma=1.5|
+|**F1**|**CE loss**|**0.693**|**0.856**|**0.863**|**0.698**|yolo default|
+|F2|Focal loss|0.639|0.797| | |gamma=1.5|
 
 - 실험 F1 - CE loss
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c
     ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_ce_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_ce_loss_100e_13c_best_ap
+    ```
   - 실험 F2 - focal loss
     - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default_focal.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c
+    ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_focal_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c_best_ap
     ```
 
 ## K-Fold
@@ -126,22 +131,22 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
 
 |실험 번호|실험 내용|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|K1|1번 train/val set|0.6926|0.8564| | |F1 실험과 동일|
+|K1|1번 train/val set|0.693|0.856|0.863|0.698|F1 실험과 동일|
 |K2|2번 train/val set| | | | | | 
 |K3|3번 train/val set| | | | | | 
 |K4|4번 train/val set| | | | | |
 |K5|5번 train/val set| | | | | |
 
-- 실험 F1 - 1번 train/val set
-  - train
-    ```shell
-    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k1_100e
-    ```
+- 실험 F1 - 1번 train/val set  ➜ F1 실험과 동일
 
 - 실험 F2 - 2번 train/val set
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_2_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k2_100e
+    ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_2_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k2_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k2_100e
     ```
 
 - 실험 F3 - 3번 train/val set
@@ -149,11 +154,19 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_3_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k3_100e
     ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_3_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k3_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k3_100e
+    ```
 
 - 실험 F4 - 4번 train/val set
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_4_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k4_100e
+    ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_4_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k4_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k4_100e
     ```
 
 - 실험 F5 - 5번 train/val set
@@ -161,7 +174,13 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_5_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k5_100e
     ```
+  - test
+    ```shell
+    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_5_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k5_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k5_100e
+    ```
 
+<br/>
+<br/>
 This is PyTorch implementation of [YOLOv4](https://github.com/AlexeyAB/darknet) which is based on [ultralytics/yolov3](https://github.com/ultralytics/yolov3).
 
 * [[original Darknet implementation of YOLOv4]](https://github.com/AlexeyAB/darknet)
