@@ -34,11 +34,11 @@
 - 실험 A2 - flip lr, translate, mosaic, hsv
   - Train
     ```shell
-    python train.py --device 0 --task test --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_fliplr_t_mosaic_hsv.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --weights '' --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e
     ```
   - Test
     ```shell
-    python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e_best_ap
+    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_flip1r_t_mosaic_hsv_100e_best_ap
     ```
 - 실험 A3 - flip lr, translate, mosaic, rotate
   - Train
