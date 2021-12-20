@@ -16,7 +16,7 @@ import numpy as np
 
 def get_input_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument('src', type=str, help='original data\'s dir')
+    parser.add_argument('--src', type=str, help='original data\'s dir')
     parser.add_argument('--dst', type=str, default='./', help='destination dir to save json files in')
     parser.add_argument('--test-ratio', type=float, default=0.1, help='test data ratio in entire data')
     parser.add_argument('--k', type=int, default=9, help='k value in \'k-fold\'')
