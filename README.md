@@ -1,4 +1,35 @@
-# YOLOv4
+# 2021 부산광역시 인공지능 학습용 데이터 해커톤 대회<br/>- 제 2 분야: 공원내 발생하는 불법객체 데이터를 활용한 모델 개발
+대회 규정에 따라 사용가능한 모델은 Yolo v4로 제한됨<br>
+[PyTorch implementation of YOLOv4](https://github.com/WongKinYiu/PyTorch_YOLOv4) 를 fork 후 추가, 수정, 튜닝하여 개발함
+
+## Yolo형식 입력 데이터 변환
+- Train / Val / Test 구분
+  - 데이터 들을 Train / Val / Test 용도로 구분하고, 각 용도로 쓰여질 파일 리스트를 json 형식으로 저장한다.
+  - ```shell
+    python convert2yolo/split_data.py --src /opt/ml/busan_detection_data --dst data/busan --test-ratio 0.1 --k 9
+    ```
+    - 위 예시의 경우, data/busan에 9개의 train/val set을 구성하고, 각 set 별로 json이 저장된다. 또한 1개의 test용 파일리스트를 갖는 json이 저장된다.
+    - 위 예시의 경우, train:val:test = 8:1:1 비율 데이터가 구성된다.
+    - 옵션 설명
+      - src: 대회 제공 원본 데이터가 저장된 경로
+      - dst: 파일 리스트 json이 저정될 경로
+      - test-ratio: 전체 데이터 중 test용으로 쓰일 비율
+      - k: test용 이외의 데이터는 k-fold 방식으로 train/val로 나뉜다. 그 때의 k
+      - seed: 데이터 shuffle 시 쓰이는 seed
+    
+- Yolo 형식 데이터 생성
+  - Yolo 형식의 디렉토리 구조를 생성한다.
+  - 생성된 디렉토리 구조에 이미지 파일을 복사한다.
+  - Yolo 형식의 annotation 파일을 생성하여 저장한다.
+  - ```shell
+     python convert2yolo/make_yolo_data_dir.py --train data/busan/train_val_1_9.json --test data/busan/test.json --src /opt/ml/busan_detection_data --dst /opt/ml/busan_detection_data_yolo_1_9
+    ```
+    - 생성된 'dst' 디렉토리는 data yaml파일에 입력되어 train, test시에 이용되어진다.
+    - 옵션 설명
+      - train: split_data.py 통해 생성된 train/val set 중 선택된 set의 파일 리스트 json 
+      - test: split_data.py 통해 생성된 test 파일 리스트 json
+      - src: 대회 제공 원본 데이터가 저장된 경로
+      - dst: Yolo 형식 데이터가 저장될 경로
 
 ## 실험
 - 모든 실험은 공통적으로 아래 조건에서 수행되었다.
