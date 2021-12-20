@@ -2,6 +2,20 @@
 대회 규정에 따라 사용가능한 모델은 Yolo v4로 제한됨<br>
 [PyTorch implementation of YOLOv4](https://github.com/WongKinYiu/PyTorch_YOLOv4) 를 fork 후 추가, 수정, 튜닝하여 개발함
 
+## Requirements
+- System
+  - Ubuntu 18.04 에서 개발됨
+  - GPU VRAM 12.8 GB 이상<br/>(아래의 실험들은 image size 640, batch size 16으로 이루어짐. VRAM 부족시 이 수치들은 하향 조정되어야 함)
+  - RAM 12.1 GB 이상 <br/>(만족할 수 없는 경우, train, test시 --cache-image를 사용하지 말 것) 
+
+- Python
+  - Python >= 3.7
+  - ```shell
+    pip install -r requirements.txt
+    ```
+
+
+
 ## Train / Val / Test 용 데이터 분할 및 Yolo형식으로 입력 데이터 변환 
 - Train / Val / Test 구분
   - 데이터 들을 Train / Val / Test 용도로 구분하고, 각 용도로 쓰여질 파일 리스트를 json 형식으로 저장한다.
