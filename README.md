@@ -2,7 +2,7 @@
 대회 규정에 따라 사용가능한 모델은 Yolo v4로 제한됨<br>
 [PyTorch implementation of YOLOv4](https://github.com/WongKinYiu/PyTorch_YOLOv4) 를 fork 후 추가, 수정, 튜닝하여 개발함
 
-## Yolo형식 입력 데이터 변환
+## Train / Val / Test 용 데이터 분할 및 Yolo형식으로 입력 데이터 변환 
 - Train / Val / Test 구분
   - 데이터 들을 Train / Val / Test 용도로 구분하고, 각 용도로 쓰여질 파일 리스트를 json 형식으로 저장한다.
   - ```shell
