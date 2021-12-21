@@ -24,12 +24,13 @@
     ```
     - 위 예시의 경우, data/busan에 9개의 train/val set을 구성하고, 각 set 별로 json이 저장된다. 또한 1개의 test용 파일리스트를 갖는 json이 저장된다.
     - 위 예시의 경우, train:val:test = 8:1:1 비율 데이터가 구성된다.
-    - 옵션 설명
+    - <details><summary>옵션 설명</summary>
       - src: 대회 제공 원본 데이터가 저장된 경로
       - dst: 파일 리스트 json이 저정될 경로
       - test-ratio: 전체 데이터 중 test용으로 쓰일 비율
       - k: test용 이외의 데이터는 k-fold 방식으로 train/val로 나뉜다. 그 때의 k
       - seed: 데이터 shuffle 시 쓰이는 seed
+      </details>
     
 - Yolo 형식 데이터 생성
   - Yolo 형식의 디렉토리 구조를 생성한다.
@@ -39,11 +40,12 @@
      python convert2yolo/make_yolo_data_dir.py --train data/busan/train_val_1_9.json --test data/busan/test.json --src /opt/ml/busan_detection_data --dst /opt/ml/busan_detection_data_yolo_1_9
     ```
     - 생성된 'dst' 디렉토리는 data yaml파일에 입력되어 train, test시에 이용되어진다.
-    - 옵션 설명
+    - <details><summary>옵션 설명</summary>
       - train: split_data.py 통해 생성된 train/val set 중 선택된 set의 파일 리스트 json 
       - test: split_data.py 통해 생성된 test 파일 리스트 json
       - src: 대회 제공 원본 데이터가 저장된 경로
       - dst: Yolo 형식 데이터가 저장될 경로
+      </details>
 
 
 ## 실험
@@ -56,7 +58,7 @@
 
 ### Augmentation
 
-|실험 번호|fliplr|trans-late|mosaic|hsv|rotate|scale|persp-ective|mixup|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
+|실험 번호|fliplr|tra-nsl-ate|mos-aic|hsv|rot-ate|scale|per-spe-ctive|mix-up|AP<sup>val</sup>| AP<sub>50</sub><sup>val</sup>|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |A1|✔|✔|✔| | | | | |0.643|0.792|0.652|0.802|baseline|
 |A2|✔|✔|✔|✔| | | | |0.645|0.794|0.648|0.801| |
