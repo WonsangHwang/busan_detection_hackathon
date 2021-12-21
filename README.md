@@ -68,6 +68,9 @@
 |A8|✔|✔|✔|✔| |✔|✔|✔|0.603|0.810|0.624|0.818| |
 |A9|✔|✔|✔|✔|✔|✔|✔|✔|0.585|0.810|0.602|0.820| |
 
+<details>
+  <summary>각 실험의 shell command</summary>
+
 - 실험 A1 - flip lr, translate, mosaic
   - Train
     ```shell
@@ -149,6 +152,7 @@
     ```shell
     python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_all_aug_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_all_aug_100e_best_ap
     ```
+</details>
 
 ### Focal Loss
 Object loss, classification loss에 focal loss를 적용
@@ -157,6 +161,9 @@ Object loss, classification loss에 focal loss를 적용
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |**F1**|**CE loss**|**0.693**|**0.856**|**0.691**|**0.860**|yolo default|
 |F2|Focal loss|0.639|0.797|0.644|0.803|gamma=1.5|
+
+<details>
+  <summary>각 실험의 shell command</summary>
 
 - 실험 F1 - CE loss
   - train
@@ -176,6 +183,7 @@ Object loss, classification loss에 focal loss를 적용
     ```shell
     python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_focal_loss_100e_13c/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_focal_loss_100e_13c_best_ap
     ```
+</details>
 
 ### K-Fold
 k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대해서만 train 하여 ensemble 하고자 한다.<br/>
@@ -191,49 +199,63 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
 |K4|4번 train/val set|0.690|0.858|0.694|0.864| |
 |K5|5번 train/val set|0.690|0.855|0.690|0.865| |
 
-- 실험 F1 - 1번 train/val set  ➜ F1 실험과 동일
+<details>
+  <summary>각 실험의 shell command</summary>
 
-- 실험 F2 - 2번 train/val set
+- 실험 K1 - 1번 train/val set
+  - train
+    ```shell
+    python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_1_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k1_100e
+    ```
+  - test
+    ```shell
+    python test.py --device 0 --task test --save-output --batch 16 --img 640  --data data/busan/park_1_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k1_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k1_100e
+    ```
+
+- 실험 K2 - 2번 train/val set
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_2_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k2_100e
     ```
   - test
     ```shell
-    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_2_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k2_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k2_100e
+    python test.py --device 0 --task test --save-output --batch 16 --img 640  --data data/busan/park_2_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k2_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k2_100e
     ```
 
-- 실험 F3 - 3번 train/val set
+- 실험 K3 - 3번 train/val set
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_3_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k3_100e
     ```
   - test
     ```shell
-    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_3_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k3_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k3_100e
+    python test.py --device 0 --task test --save-output --batch 16 --img 640  --data data/busan/park_3_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k3_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k3_100e
     ```
 
-- 실험 F4 - 4번 train/val set
+- 실험 K4 - 4번 train/val set
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_4_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k4_100e
     ```
   - test
     ```shell
-    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_4_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k4_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k4_100e
+    python test.py --device 0 --task test --save-output --batch 16 --img 640  --data data/busan/park_4_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k4_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k4_100e
     ```
 
-- 실험 F5 - 5번 train/val set
+- 실험 K5 - 5번 train/val set
   - train
     ```shell
     python train.py --device 0 --cache-images --batch-size 16 --epochs 100 --img-size 640 640 --data data/busan/park_5_9.yaml --hyp data/busan/hyp_yolo_default.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --weights '' --project busan --name x-leaky_bs16_640_640_k5_100e
     ```
   - test
     ```shell
-    python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_5_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k5_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k5_100e
+    python test.py --device 0 --task test --save-output --batch 16 --img 640  --data data/busan/park_5_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k5_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k5_100e
     ```
+</details>
   
-### Ensemble - WBF (Weighted Box Fusion)
+### Ensemble - WBF (Weighted Boxes Fusion) [[paper]](https://arxiv.org/abs/1910.13302) [[implemetation]](https://github.com/ZFTurbo/Weighted-Boxes-Fusion)
+K1 ~ K5를 대상으로 한다. 재현을 위해서는 K1 ~ K5 test시 --save-output 옵션을 통해 inference 결과가 저장되어 있어야 한다.
+
 |실험 번호|대상 inference|IOU threshold|Weights|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |E1|K1~K5|0.60|1,1,1,1,1|0.688|0.860| |
@@ -245,6 +267,9 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
 |E7|K1~K5|0.70|1,1,1,3.0,1|0.709|0.871| |
 |**E8**|K1~K5|**0.70**|**1.5,1,1,2.0,1.5**|**0.714**|**0.873**| |
 |**E9**|K1~K5|**0.70**|**1.5,1.2,1.2,2.0,1.5**|**0.714**|**0.873**| |
+
+<details>
+  <summary>각 실험의 shell command</summary>
 
 - 실험 E1
   - ensemble
@@ -335,5 +360,4 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
   ```shell
   python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou70_w1512122015.pkl --plots --task test --project busan --name ensemble_iou70_w1512122015
   ```
-
-
+</details>
