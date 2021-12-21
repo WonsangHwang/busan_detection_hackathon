@@ -63,25 +63,29 @@ def test(data,
         save_dir = Path(increment_path(Path(opt.project) / opt.name, exist_ok=opt.exist_ok))  # increment run
         (save_dir / 'labels' if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
-        # Load model
-        model = Darknet(opt.cfg).to(device)
+        if load_output_pickle:
+            model = None
+        else:
+            # Load model
+            model = Darknet(opt.cfg).to(device)
 
-        # load model
-        try:
-            ckpt = torch.load(weights[0], map_location=device)  # load checkpoint
-            ckpt['model'] = {k: v for k, v in ckpt['model'].items() if model.state_dict()[k].numel() == v.numel()}
-            model.load_state_dict(ckpt['model'], strict=False)
-        except:
-            load_darknet_weights(model, weights[0])
-        imgsz = check_img_size(imgsz, s=64)  # check img_size
+            # load model
+            try:
+                ckpt = torch.load(weights[0], map_location=device)  # load checkpoint
+                ckpt['model'] = {k: v for k, v in ckpt['model'].items() if model.state_dict()[k].numel() == v.numel()}
+                model.load_state_dict(ckpt['model'], strict=False)
+            except:
+                load_darknet_weights(model, weights[0])
+            imgsz = check_img_size(imgsz, s=64)  # check img_size
 
     # Half
     half = device.type != 'cpu'  # half precision only supported on CUDA
-    if half:
+    if model and half:
         model.half()
 
     # Configure
-    model.eval()
+    if model:
+        model.eval()
     is_coco = data.endswith('coco.yaml')  # is COCO dataset
     with open(data) as f:
         data = yaml.load(f, Loader=yaml.FullLoader)  # model dict
@@ -109,14 +113,19 @@ def test(data,
     # Dataloader
     if not training:
         img = torch.zeros((1, 3, imgsz, imgsz), device=device)  # init img
-        _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
+        if model:
+            _ = model(img.half() if half else img) if device.type != 'cpu' else None  # run once
         path = data['test'] if opt.task == 'test' else data['val']  # path to val/test images
         dataloader = create_dataloader(path, imgsz, batch_size, 64, opt, pad=0.5, rect=True)[0]
 
     seen = 0
-    try:
-        names = model.names if hasattr(model, 'names') else model.module.names
-    except:
+
+    if model:
+        try:
+            names = model.names if hasattr(model, 'names') else model.module.names
+        except:
+            names = load_classes(opt.names)
+    else:
         names = load_classes(opt.names)
     coco91class = coco80_to_coco91_class()
     s = ('%20s' + '%12s' * 6) % ('Class', 'Images', 'Targets', 'P', 'R', 'mAP@.5', 'mAP@.5:.95')
@@ -130,6 +139,7 @@ def test(data,
     if load_output_pickle:
         with open(load_output_pickle, 'rb') as pkl_file:
             all_outputs_loaded = pickle.load(pkl_file)
+        all_outputs_loaded = [a_tensor_output.to(device) for a_tensor_output in all_outputs_loaded]
 
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
@@ -316,7 +326,8 @@ def test(data,
     # Return results
     if not training:
         print('Results saved to %s' % save_dir)
-    model.float()  # for training
+    if training:
+        model.float()  # for training
     maps = np.zeros(nc) + map
     for i, c in enumerate(ap_class):
         maps[c] = ap[i]
