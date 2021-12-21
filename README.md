@@ -232,3 +232,108 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```shell
     python test.py --device 0 --task test --batch 16 --img 640  --data data/busan/park_5_9.yaml --cfg cfg/yolov4-csp-x-leaky_busan.cfg --names data/busan/park.names --weights busan/x-leaky_bs16_640_640_k5_100e/weights/best_ap.pt --project busan --name x-leaky_bs16_640_640_k5_100e
     ```
+  
+### Ensemble - WBF (Weighted Box Fusion)
+|실험 번호|대상 inference|IOU threshold|Weights|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|E1|K1~K5|0.60|1,1,1,1,1|0.688|0.860| |
+|E2|K1~K5|0.65|1,1,1,1,1|0.709|0.870| |
+|**E3**|K1~K5|**0.70**|**1,1,1,1,1**|**0.714**|**0.873**| |
+|E4|K1~K5|0.75|1,1,1,1,1|0.712|0.872| |
+|E5|K1~K5|0.80|1,1,1,1,1|0.710|0.869| |
+|E6|K1~K5|0.70|1,1,1,2.0,1|0.712|0.872| |
+|E7|K1~K5|0.70|1,1,1,3.0,1|0.709|0.871| |
+|**E8**|K1~K5|**0.70**|**1.5,1,1,2.0,1.5**|**0.714**|**0.873**| |
+|**E9**|K1~K5|**0.70**|**1.5,1.2,1.2,2.0,1.5**|**0.714**|**0.873**| |
+
+- 실험 E1
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou60_w11111.pkl --iou-thr 0.6 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou60_w11111.pkl --plots --task test --project busan --name ensemble_iou60_w11111
+  ```
+  
+- 실험 E2
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou65_w11111.pkl --iou-thr 0.65 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou65_w11111.pkl --plots --task test --project busan --name ensemble_iou65_w11111
+  ```
+
+- 실험 E3
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou70_w11111.pkl --iou-thr 0.7 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou70_w11111.pkl --plots --task test --project busan --name ensemble_iou70_w11111
+  ```
+  
+- 실험 E4
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou75_w11111.pkl --iou-thr 0.75 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou75_w11111.pkl --plots --task test --project busan --name ensemble_iou75_w11111
+  ```
+
+- 실험 E5
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou80_w11111.pkl --iou-thr 0.8 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou80_w11111.pkl --plots --task test --project busan --name ensemble_iou80_w11111
+  ```
+
+- 실험 E6
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou70_w1010102010.pkl --iou-thr 0.7 --weights 1.0 1.0 1.0 2.0 1.0 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou70_w1010102010.pkl --plots --task test --project busan --name ensemble_iou70_w1010102010
+  ```
+  
+- 실험 E7
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou70_w1010103010.pkl --iou-thr 0.7 --weights 1.0 1.0 1.0 3.0 1.0 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou70_w1010103010.pkl --plots --task test --project busan --name ensemble_iou70_w1010103010
+  ```
+
+- 실험 E8
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou70_w1510102015.pkl --iou-thr 0.7 --weights 1.5 1.0 1.0 2.0 1.5 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou70_w1510102015.pkl --plots --task test --project busan --name ensemble_iou70_w1510102015
+  ```
+
+- 실험 E9
+  - ensemble
+  ```shell
+  python ensemble.py --dst busan/ensemble_iou70_w1512122015.pkl --iou-thr 0.7 --weights 1.5 1.2 1.2 2.0 1.5 --preds busan/test_best_ap_x-leaky_bs16_640_640_k1_100e/test_best_ap_x-leaky_bs16_640_640_k1_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k2_100e/test_best_ap_x-leaky_bs16_640_640_k2_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k3_100e/test_best_ap_x-leaky_bs16_640_640_k3_100e_output.pkl busan/test_best_ap_x-leaky_bs16_640_640_k5_100e/test_best_ap_x-leaky_bs16_640_640_k5_100e_output.pkl
+  ```
+  - test
+  ```shell
+  python test.py --device 0 --batch 16 --img 640  --data data/busan/park_1_9.yaml --names data/busan/park.names --load-output-pickle busan/ensemble_iou70_w1512122015.pkl --plots --task test --project busan --name ensemble_iou70_w1512122015
+  ```
+
+
