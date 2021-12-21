@@ -255,7 +255,7 @@ k=9 이므로 9개의 train/val set이 있으나, 시간 관계상 5개에 대�
     ```
 </details>
   
-### Ensemble - WBF (Weighted Boxes Fusion) [[paper]](https://arxiv.org/abs/1910.13302) [[implemetation]](https://github.com/ZFTurbo/Weighted-Boxes-Fusion)
+### Ensemble - WBF (Weighted Boxes Fusion) [[paper]](https://arxiv.org/abs/1910.13302) [[implementation]](https://github.com/ZFTurbo/Weighted-Boxes-Fusion)
 K1 ~ K5를 대상으로 한다. 재현을 위해서는 K1 ~ K5 test시 --save-output 옵션을 통해 inference 결과가 저장되어 있어야 한다.
 
 |실험 번호|대상 inference|IOU threshold|Weights|AP<sup>test</sup>| AP<sub>50</sub><sup>test</sup>|비고|
